@@ -16,10 +16,6 @@ describe('Inventory tests', () => {
 			inventoryPage.visit();
 		});
 
-		afterEach('Clear cookies', () => {
-			cy.clearCookie('session-username');
-		});
-
 		it('Should verify inventory content', () => {
 			header
 				.assertInventoryHeader()

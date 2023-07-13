@@ -1,4 +1,6 @@
-export class Header {
+import { BasePage } from './BasePage';
+
+export class Header extends BasePage {
 	assertInventoryHeader(): this {
 		cy.get('.header_label .app_logo').should('have.text', 'Swag Labs');
 		return this;
@@ -11,6 +13,16 @@ export class Header {
 
 	assertCartButton(): this {
 		cy.get('.primary_header #shopping_cart_container').should('be.visible');
+		return this;
+	}
+
+	assertCartIndicator(value: number | null): this {
+		value === null
+			? cy.get('.shopping_cart_badge').should('not.exist')
+			: cy
+					.get('.shopping_cart_badge')
+					.should('be.visible')
+					.and('have.text', value);
 		return this;
 	}
 

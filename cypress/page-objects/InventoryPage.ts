@@ -6,10 +6,37 @@ export class InventoryPage {
 		return this;
 	}
 
+	clickAddToCart(index: number = 0): this {
+		cy.get('.inventory_item')
+			.eq(index)
+			.find('[id^="add-to-cart-sauce-labs-"]')
+			.should('be.visible')
+			.click();
+		return this;
+	}
+
+	clickRemove(index: number = 0): this {
+		cy.get('.inventory_item')
+			.eq(index)
+			.find('[id^="remove-sauce-labs-"]')
+			.should('be.visible')
+			.click();
+		return this;
+	}
+
 	assertInventoryItemsVisible(): this {
 		cy.get('.inventory_item').each((item) => {
 			expect(item).to.be.visible;
 		});
+		return this;
+	}
+
+	assertRemoveFromCartBtn(index: number = 0): this {
+		cy.get('.inventory_item')
+			.eq(index)
+			.find('#remove-sauce-labs-backpack')
+			.should('be.visible')
+			.and('have.text', 'Remove');
 		return this;
 	}
 

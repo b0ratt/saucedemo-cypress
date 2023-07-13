@@ -5,6 +5,8 @@ import { credentials } from '../support/credentials';
 describe('Authentication', () => {
 	const loginPage = new LoginPage();
 	const inventoryPage = new InventoryPage();
+	const password = credentials.password;
+	let username: string;
 
 	beforeEach(() => {
 		loginPage.visit();
@@ -18,39 +20,51 @@ describe('Authentication', () => {
 	});
 
 	it('Should attempt to login with standard user', () => {
+		username = credentials.username[0];
+
 		loginPage
-			.fillUsernameInput(credentials.username[0])
-			.fillPasswordInput(credentials.password)
+			.fillUsernameInput(username)
+			.fillPasswordInput(password)
 			.clickLoginButton()
-			.assertErrorMessage(false);
+			.assertErrorMessageNotExist()
+			.assertCookieAfterLogin(username);
 
 		inventoryPage.assertInventoryContainerVisible();
 	});
 
 	it('Should attempt to login with locked user', () => {
+		username = credentials.username[1];
+
 		loginPage
-			.fillUsernameInput(credentials.username[1])
-			.fillPasswordInput(credentials.password)
+			.fillUsernameInput(username)
+			.fillPasswordInput(password)
 			.clickLoginButton()
-			.assertErrorMessage(true);
+			.assertErrorMessageNotExist()
+			.assertCookieAfterLogin(username);
 	});
 
 	it('Should attempt to login with problem user', () => {
+		username = credentials.username[2];
+
 		loginPage
-			.fillUsernameInput(credentials.username[2])
-			.fillPasswordInput(credentials.password)
+			.fillUsernameInput(username)
+			.fillPasswordInput(password)
 			.clickLoginButton()
-			.assertErrorMessage(false);
+			.assertErrorMessageNotExist()
+			.assertCookieAfterLogin(username);
 
 		inventoryPage.assertInventoryContainerVisible();
 	});
 
 	it('Should attempt to login with performance glitch user', () => {
+		username = credentials.username[3];
+
 		loginPage
-			.fillUsernameInput(credentials.username[3])
-			.fillPasswordInput(credentials.password)
+			.fillUsernameInput(username)
+			.fillPasswordInput(password)
 			.clickLoginButton()
-			.assertErrorMessage(false);
+			.assertErrorMessageNotExist()
+			.assertCookieAfterLogin(username);
 
 		inventoryPage.assertInventoryContainerVisible();
 	});

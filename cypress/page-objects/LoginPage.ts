@@ -23,6 +23,13 @@ export class LoginPage {
 		return this;
 	}
 
+	assertCookieAfterLogin(username: string): this {
+		cy.getCookie('session-username')
+			.should('exist')
+			.and('have.property', 'value', username);
+		return this;
+	}
+
 	assertLoginPageHeader(): this {
 		cy.get('.login_logo').should('be.visible').and('have.text', 'Swag Labs');
 		return this;
@@ -60,10 +67,8 @@ export class LoginPage {
 		return this;
 	}
 
-	assertErrorMessage(visible: boolean = false): this {
-		visible == false
-			? cy.get('h3[data-test="error"]').should('not.exist')
-			: cy.get('h3[data-test="error"]').should('be.visible');
+	assertErrorMessageNotExist(): this {
+		cy.get('h3[data-test="error"]').should('not.exist');
 		return this;
 	}
 }

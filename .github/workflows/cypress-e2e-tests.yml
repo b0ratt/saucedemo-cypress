@@ -1,0 +1,45 @@
+name: Cypress e2e tests
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    env:
+      BUILD_PREFIX: true
+      IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      # Site Testing steps
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start application
+        run:
+          npm run start:application & npx wait-on --timeout 60000
+          http://localhost:3000
+
+      - name: Run cypress tests
+        continue-on-error: true
+        run: npm run e2e:start
+
+      - name: Generate html report
+        run: npm run e2e:generate:report
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: E2E report
+          path: cypress/mochawesome

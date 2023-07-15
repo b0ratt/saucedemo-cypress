@@ -19,7 +19,7 @@ describe('Authentication', () => {
 			.assertTestingCredentials();
 	});
 
-	it('Should attempt to login with standard user', () => {
+	it('Should login with standard user', () => {
 		username = credentials.username[0];
 
 		loginPage
@@ -32,18 +32,18 @@ describe('Authentication', () => {
 		inventoryPage.assertInventoryContainerVisible();
 	});
 
-	it('Should attempt to login with locked user', () => {
+	it('Should not login with locked user', () => {
 		username = credentials.username[1];
 
 		loginPage
 			.fillUsernameInput(username)
 			.fillPasswordInput(password)
 			.clickLoginButton()
-			.assertErrorMessageNotExist()
+			.assertErrorMessageVisible()
 			.assertCookieAfterLogin(username);
 	});
 
-	it('Should attempt to login with problem user', () => {
+	it('Should login with problem user', () => {
 		username = credentials.username[2];
 
 		loginPage
@@ -56,7 +56,7 @@ describe('Authentication', () => {
 		inventoryPage.assertInventoryContainerVisible();
 	});
 
-	it('Should attempt to login with performance glitch user', () => {
+	it('Should login with performance glitch user', () => {
 		username = credentials.username[3];
 
 		loginPage

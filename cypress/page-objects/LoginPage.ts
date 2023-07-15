@@ -67,6 +67,11 @@ export class LoginPage {
 		return this;
 	}
 
+	assertErrorMessageVisible(): this {
+		cy.get('h3[data-test="error"]').should('be.visible');
+		return this;
+	}
+
 	assertErrorMessageNotExist(): this {
 		cy.get('h3[data-test="error"]').should('not.exist');
 		return this;

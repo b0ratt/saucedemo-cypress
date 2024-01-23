@@ -1,17 +1,19 @@
-import { Footer } from '../page-objects/Footer';
-import { Header } from '../page-objects/Header';
-import { InventoryPage } from '../page-objects/InventoryPage';
-import { credentials } from '../support/credentials';
+import { Footer } from '../../page-objects/Footer';
+import { Header } from '../../page-objects/Header';
+import { InventoryPage } from '../../page-objects/InventoryPage';
+import { credentials } from '../../support/credentials';
+import { setViewport, viewports } from '../../support/viewports';
 
 describe('Inventory tests', () => {
   const inventoryPage = new InventoryPage();
   const header = new Header();
   const footer = new Footer();
 
-  context('Standard user', () => {
+  context('Small device', () => {
     const username = credentials.username[0];
 
     beforeEach('Login and navigate to inventory page', () => {
+      setViewport(viewports.small);
       cy.setCookie('session-username', username);
       inventoryPage.visit();
     });

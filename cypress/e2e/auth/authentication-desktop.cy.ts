@@ -20,7 +20,7 @@ describe('Authentication', () => {
         .assertTestingCredentials();
     });
 
-    it.only('Should verify auth validation', () => {
+    it('Should verify auth validation', () => {
       username = credentials.username[0];
 
       loginPage

@@ -1,8 +1,19 @@
+import Chainable = Cypress.Chainable;
 export class InventoryPage {
 	URL = '/inventory.html';
 
 	visit(): this {
 		cy.visit(this.URL);
+		return this;
+	}
+
+	addProductToCart(productName: string): this {
+		console.log(productName);
+
+		cy.get(`.inventory_item:contains(${productName})`).within(() => {
+			cy.get('[id^="add-to-cart-"]').should('be.visible').click();
+		});
+
 		return this;
 	}
 
@@ -28,6 +39,14 @@ export class InventoryPage {
 		cy.get('.inventory_item').each((item) => {
 			expect(item).to.be.visible;
 		});
+		return this;
+	}
+
+	assertRemoveBtnByName(productName: string): this {
+		cy.get(`.inventory_item:contains(${productName})`).within(() => {
+			cy.get('div').contains('Remove').should('be.visible');
+		});
+
 		return this;
 	}
 
@@ -64,5 +83,9 @@ export class InventoryPage {
 	assertInventoryContainerVisible(): this {
 		cy.get('#inventory_container').should('be.visible');
 		return this;
+	}
+
+	getProductByName(productName: string): Chainable<JQuery> {
+		return cy.get(`.inventory_item:contains(${productName})`);
 	}
 }

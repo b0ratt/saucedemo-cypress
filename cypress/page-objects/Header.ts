@@ -1,6 +1,13 @@
 import { BasePage } from './BasePage';
 
 export class Header extends BasePage {
+	clickCartBtn(): this {
+		cy.get('#shopping_cart_container')
+			.should('be.visible')
+			.click()
+		return this;
+	}
+
 	assertInventoryHeader(): this {
 		cy.get('.header_label .app_logo').should('have.text', 'Swag Labs');
 		return this;

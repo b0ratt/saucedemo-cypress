@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
         test-type:
-          description: 'Choose the device on which you want to run the tests.'
+          description: 'Device: (all/desktop/medium/small)'
           required: true
           default: 'all'
           options:

@@ -33,7 +33,7 @@ export class Footer {
 	assertCopyrightsText(): this {
 		cy.get('.footer_copy').should(
 			'have.text',
-			'© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy'
+			'© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy'
 		);
 
 		return this;

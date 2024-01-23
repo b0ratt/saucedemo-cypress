@@ -2,6 +2,16 @@ name: Cypress e2e tests
 
 on:
   workflow_dispatch:
+    inputs:
+        test-type:
+          description: 'Choose the device on which you want to run the tests.'
+          required: true
+          default: 'all'
+          options:
+            - 'all'
+            - 'desktop'
+            - 'medium'
+            - 'small'
 
 jobs:
   build:
@@ -35,7 +45,7 @@ jobs:
 
       - name: Run cypress tests
         continue-on-error: true
-        run: npm run e2e:all
+        run: npm run e2e:${{ github.event.inputs.test-type }}
 
       - name: Generate cypress reports
         run: npm run report:merge && npm run report:generate

@@ -172,8 +172,6 @@ describe('Order flow', () => {
             productPrice = _price.toString();
           })
           .then(() => {
-            const sanitizedPrice = productPrice.replace('$', '');
-
             header.assertCartIndicator(1).clickCartBtn();
             cartPage
               .assertCartContainsProduct(productName)

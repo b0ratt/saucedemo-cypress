@@ -2,9 +2,13 @@ import { BasePage } from './BasePage';
 
 export class Header extends BasePage {
 	clickCartBtn(): this {
-		cy.get('#shopping_cart_container')
-			.should('be.visible')
-			.click()
+		cy.get('#shopping_cart_container').should('be.visible').click();
+		return this;
+	}
+
+	sortInventoryItems(option: string): this {
+		cy.get('.product_sort_container').select(option);
+
 		return this;
 	}
 

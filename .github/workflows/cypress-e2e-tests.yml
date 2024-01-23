@@ -30,7 +30,7 @@ jobs:
 
       - name: Run cypress tests
         continue-on-error: true
-        run: npm run e2e:start
+        run: npm run e2e:all
 
       - name: Generate cypress reports
         run: npm run report:merge && npm run report:generate

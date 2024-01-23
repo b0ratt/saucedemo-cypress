@@ -20,6 +20,17 @@ describe('Authentication', () => {
         .assertTestingCredentials();
     });
 
+    it.only('Should verify auth validation', () => {
+      username = credentials.username[0];
+
+      loginPage
+        .clickLoginButton()
+        .assertErrorMessageVisible('Epic sadface: Username is required')
+        .fillUsernameInput(username)
+        .clickLoginButton()
+        .assertErrorMessageVisible('Epic sadface: Password is required');
+    });
+
     it('Should login with standard user', () => {
       username = credentials.username[0];
 

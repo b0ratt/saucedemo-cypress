@@ -1,9 +1,9 @@
 export const credentials = {
 	username: [
-		'standard_user',
-		'locked_out_user',
-		'problem_user',
-		'performance_glitch_user',
+		Cypress.env('LOGIN'),
+		Cypress.env('LOCKED_USER'),
+		Cypress.env('PROBLEM_USER'),
+		Cypress.env('GLITCH_USER'),
 	],
-	password: 'secret_sauce',
+	password: Cypress.env('PASSWORD'),
 };

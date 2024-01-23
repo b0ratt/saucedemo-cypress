@@ -1,5 +1,8 @@
 import { defineConfig } from 'cypress';
 
+const path = require('path');
+require('dotenv').config({ path: path.resolve('', '.env') });
+
 export default defineConfig({
 	reporter: 'mochawesome',
 	screenshotsFolder: 'cypress/mochawesome-report/screenshots',
@@ -12,6 +15,13 @@ export default defineConfig({
 		overwrite: true,
 		html: true,
 		json: true,
+	},
+	env: {
+		LOGIN: process.env.CYPRESS_USERNAME,
+		PASSWORD: process.env.CYPRESS_PASSWORD,
+		LOCKED_USER: process.env.CYPRESS_LOCKER_USER,
+		PROBLEM_USER: process.env.CYPRESS_PROBLEM_USER,
+		GLITCH_USER: process.env.CYPRESS_PERFORMANCE_GLITCH_USER,
 	},
 	e2e: {
 		baseUrl: 'http://localhost:3000',

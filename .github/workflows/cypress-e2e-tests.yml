@@ -12,6 +12,11 @@ jobs:
     env:
       BUILD_PREFIX: true
       IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
+      CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+      CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+      CYPRESS_LOCKER_USER: ${{ secrets.CYPRESS_LOCKER_USER }}
+      CYPRESS_PROBLEM_USER: ${{ secrets.CYPRESS_PROBLEM_USER }}
+      CYPRESS_PERFORMANCE_GLITCH_USER: ${{ secrets.CYPRESS_PERFORMANCE_GLITCH_USER }}
 
     steps:
       - name: Checkout Repository

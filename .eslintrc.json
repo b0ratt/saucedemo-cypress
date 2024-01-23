@@ -1,0 +1,19 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "plugins": ["ban"],
+    "rules": {
+        "ban/ban": [
+            "error",
+            {
+              "name": ["cy", "wait"],
+              "message": "This method is forbidden. Use assertion for element instead."
+            }
+          ]
+    }
+}

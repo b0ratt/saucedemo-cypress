@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
-import { isProblemUser } from "../utils/Credentials";
-import { ROUTES } from "../utils/Constants";
-import { ShoppingCart } from "../utils/shopping-cart";
-import { InventoryData } from "../utils/InventoryData";
-import HeaderContainer from "../components/HeaderContainer";
-import Button, { BUTTON_SIZES, BUTTON_TYPES } from "../components/Button";
-import SwagLabsFooter from "../components/Footer";
-import "./InventoryItem.css";
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import { isProblemUser } from '../utils/Credentials';
+import { ROUTES } from '../utils/Constants';
+import { ShoppingCart } from '../utils/shopping-cart';
+import { InventoryData } from '../utils/InventoryData';
+import HeaderContainer from '../components/HeaderContainer';
+import Button, { BUTTON_SIZES, BUTTON_TYPES } from '../components/Button';
+import SwagLabsFooter from '../components/Footer';
+import './InventoryItem.css';
 
 const InventoryItem = (props) => {
   useEffect(() => {
@@ -20,29 +20,29 @@ const InventoryItem = (props) => {
   let item;
 
   /* istanbul ignore else */
-  if (queryParams.has("id")) {
-    inventoryId = parseInt(queryParams.get("id"));
+  if (queryParams.has('id')) {
+    inventoryId = parseInt(queryParams.get('id'));
   }
 
   if (inventoryId >= 0 && InventoryData.length > inventoryId) {
     item = InventoryData[inventoryId];
   } else {
     item = {
-      name: "ITEM NOT FOUND",
+      name: 'ITEM NOT FOUND',
       desc: `We're sorry, but your call could not be completed as dialled.
           Please check your number, and try your call again.
           If you are in need of assistance, please dial 0 to be connected with an operator.
           This is a recording.
           4 T 1.`,
-      image_url: "sl-404.jpg",
-      price: "√-1",
+      image_url: 'sl-404.jpg',
+      price: '√-1',
     };
   }
 
   item.id = inventoryId;
 
   const [itemInCart, setItemInCart] = useState(
-    ShoppingCart.isItemInCart(inventoryId)
+    ShoppingCart.isItemInCart(inventoryId),
   );
   /**
    * @TODO:
@@ -102,10 +102,10 @@ const InventoryItem = (props) => {
    */
   /* istanbul ignore next */
   const ButtonType = ({ id, item, itemInCart }) => {
-    const label = itemInCart ? "Remove" : "Add to cart";
+    const label = itemInCart ? 'Remove' : 'Add to cart';
     const onClick = itemInCart ? () => removeFromCart(id) : () => addToCart(id);
     const type = itemInCart ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PRIMARY;
-    const testId = `${label}-${item}`.replace(/\s+/g, "-").toLowerCase();
+    const testId = `${label}`.replace(/\s+/g, '_').toLowerCase();
 
     return (
       <Button
@@ -113,7 +113,7 @@ const InventoryItem = (props) => {
         label={label}
         onClick={onClick}
         size={BUTTON_SIZES.SMALL}
-        testId={testId}
+        data-cy={testId}
         type={type}
       />
     );
@@ -130,7 +130,7 @@ const InventoryItem = (props) => {
               label="Back to products"
               onClick={goBack}
               type={BUTTON_TYPES.BACK}
-              testId="back-to-products"
+              data-cy="back_to_products"
             />
           }
         />

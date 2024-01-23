@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./Select.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './Select.css';
 
 const Select = ({ activeOption, onChange, options, testId }) => {
   return (
@@ -15,9 +15,10 @@ const Select = ({ activeOption, onChange, options, testId }) => {
         onChange={onChange}
         className="product_sort_container"
         value={activeOption}
+        data-cy="sort_container"
         {...(testId
           ? {
-              "data-test": testId,
+              'data-test': testId,
             }
           : {})}
       >
@@ -46,7 +47,7 @@ Select.propTypes = {
     PropTypes.shape({
       key: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   /**
    * The test id

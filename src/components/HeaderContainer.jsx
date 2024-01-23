@@ -49,10 +49,14 @@ const HeaderContainer = ({
         <div id="menu_button_container">
           <DrawerMenu />
         </div>
-        <div className="header_label">
+        <div className="header_label" data-cy="app_logo">
           <div className="app_logo">Swag Labs</div>
         </div>
-        <div id="shopping_cart_container" className="shopping_cart_container">
+        <div
+          id="shopping_cart_container"
+          className="shopping_cart_container"
+          data-cy="cart_button"
+        >
           <CartButton />
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { credentials } from '../support/credentials';
+import Chainable = Cypress.Chainable;
 
 export class LoginPage {
   URL = '';
@@ -9,17 +10,17 @@ export class LoginPage {
   }
 
   fillUsernameInput(username: string): this {
-    cy.get('input[id="user-name"]').should('be.visible').type(username);
+    this.getUsernameInput().should('be.visible').type(username);
     return this;
   }
 
   fillPasswordInput(password: string): this {
-    cy.get('input[id="password"]').should('be.visible').type(password);
+    this.getPasswordInput().should('be.visible').type(password);
     return this;
   }
 
   clickLoginButton(): this {
-    cy.get('input[id="login-button"]').should('be.visible').click();
+    this.getLoginBtn().should('be.visible').click();
     return this;
   }
 
@@ -31,23 +32,23 @@ export class LoginPage {
   }
 
   assertLoginPageHeader(): this {
-    cy.get('.login_logo').should('be.visible').and('have.text', 'Swag Labs');
+    this.getWebsiteLogo().should('be.visible').and('have.text', 'Swag Labs');
     return this;
   }
 
   assertAuthenticationForm(): this {
-    const loginFormSelectors = ['#user-name', '#password', '#login-button'];
+    const loginFormSelectors = ['username', 'password', 'login_button'];
 
-    cy.get('.login-box').within(() => {
+    this.getLoginForm().within(() => {
       loginFormSelectors.forEach((selector) => {
-        cy.get(selector).should('be.visible').and('not.be.disabled');
+        cy.dataCy(selector).should('be.visible').and('not.be.disabled');
       });
     });
     return this;
   }
 
   assertTestingCredentials(): this {
-    cy.get('.login_credentials_wrap-inner #login_credentials')
+    this.getLoginCredentials()
       .within(() => {
         cy.get('h4').should('have.text', 'Accepted usernames are:');
       })
@@ -57,28 +58,61 @@ export class LoginPage {
         });
       });
 
-    cy.get('.login_credentials_wrap-inner .login_password')
+    this.getLoginPassword()
       .within(() => {
         cy.get('h4').should('have.text', 'Password for all users:');
       })
       .then((element) => {
         expect(element).to.contain(credentials.password);
       });
+
     return this;
   }
 
   assertErrorMessageVisible(message?: string): this {
-    cy.get('h3[data-test="error"]').should('be.visible');
+    this.getErrorMessage().should('be.visible');
 
     if (message) {
-      cy.get('h3[data-test="error"]').should('contain', message);
+      this.getErrorMessage().should('contain', message);
     }
 
     return this;
   }
 
   assertErrorMessageNotExist(): this {
-    cy.get('h3[data-test="error"]').should('not.exist');
+    this.getErrorMessage().should('not.exist');
     return this;
+  }
+
+  private getUsernameInput(): Chainable {
+    return cy.dataCy('username');
+  }
+
+  private getPasswordInput(): Chainable {
+    return cy.dataCy('password');
+  }
+
+  private getLoginBtn(): Chainable {
+    return cy.dataCy('login_button');
+  }
+
+  private getWebsiteLogo(): Chainable {
+    return cy.dataCy('logo');
+  }
+
+  private getLoginForm(): Chainable {
+    return cy.dataCy('login_container');
+  }
+
+  private getLoginCredentials(): Chainable {
+    return cy.dataCy('login_credentials');
+  }
+
+  private getLoginPassword(): Chainable {
+    return cy.dataCy('login_password');
+  }
+
+  private getErrorMessage(): Chainable {
+    return cy.dataCy('error_message');
   }
 }

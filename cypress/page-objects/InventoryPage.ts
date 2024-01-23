@@ -8,65 +8,71 @@ export class InventoryPage {
   }
 
   addProductToCart(productName: string): this {
-    console.log(productName);
-
-    cy.get(`.inventory_item:contains(${productName})`).within(() => {
-      cy.get('[id^="add-to-cart-"]').should('be.visible').click();
-    });
+    this.getInventoryItem()
+      .contains(productName)
+      .within(() => {
+        this.getAddToCartBtn().should('be.visible').click();
+      });
 
     return this;
   }
 
   clickAddToCart(index: number = 0): this {
-    cy.get('.inventory_item')
+    this.getInventoryItem()
       .eq(index)
-      .find('[id^="add-to-cart-sauce-labs-"]')
+      .find('[data-cy="add_to_cart"]')
       .should('be.visible')
       .click();
+
     return this;
   }
 
   clickRemove(index: number = 0): this {
-    cy.get('.inventory_item')
+    this.getInventoryItem()
       .eq(index)
-      .find('[id^="remove-sauce-labs-"]')
+      .find('[data-cy="remove"]')
       .should('be.visible')
       .click();
+
     return this;
   }
 
   assertInventoryItemsVisible(): this {
-    cy.get('.inventory_item').each((item) => {
+    this.getInventoryItem().each((item) => {
       expect(item).to.be.visible;
     });
+
     return this;
   }
 
   assertRemoveBtnByName(productName: string): this {
-    cy.get(`.inventory_item:contains(${productName})`).within(() => {
-      cy.get('div').contains('Remove').should('be.visible');
-    });
+    this.getInventoryItem()
+      .contains(productName)
+      .within(() => {
+        this.getRemoveBtn().should('contain', 'Remove').and('be.visible');
+      });
 
     return this;
   }
 
   assertRemoveFromCartBtn(index: number = 0): this {
-    cy.get('.inventory_item')
+    this.getInventoryItem()
       .eq(index)
-      .find('#remove-sauce-labs-backpack')
+      .find('[data-cy="remove"]')
       .should('be.visible')
       .and('have.text', 'Remove');
+
     return this;
   }
 
   assertInventoryItemsContent(): this {
-    cy.get('.inventory_item').each((item) => {
+    this.getInventoryItem().each((item) => {
       let selectors = {
-        image: item.find('img'),
-        itemHeader: item.find('[id$=_title_link]'),
-        itemDescription: item.find('.inventory_item_desc'),
-        itemPrice: item.find('.inventory_item_price'),
-        addToCarBtn: item.find('.btn_inventory'),
+        image: item.find('[data-cy="inventory_item_image"]'),
+        itemHeader: item.find('[data-cy="inventory_item_name"]'),
+        itemDescription: item.find('[data-cy="inventory_item_description"]'),
+        itemPrice: item.find('[data-cy="inventory_item_price"]'),
+        addToCarBtn: item.find('[data-cy="add_to_cart"]'),
       };
 
       expect(selectors.itemHeader).to.have.attr('href');
@@ -77,15 +83,33 @@ export class InventoryPage {
       expect(selectors.addToCarBtn).to.have.text('Add to cart');
       expect(selectors.image).to.have.attr('src').and.not.contain('404');
     });
+
     return this;
   }
 
   assertInventoryContainerVisible(): this {
-    cy.get('#inventory_container').should('be.visible');
+    this.getInventoryContainer().should('be.visible');
+
     return this;
   }
 
   getProductByName(productName: string): Chainable<JQuery> {
-    return cy.get(`.inventory_item:contains(${productName})`);
+    return this.getInventoryItem().contains(productName);
+  }
+
+  private getInventoryItem(): Chainable {
+    return cy.dataCy('inventory_item');
+  }
+
+  private getAddToCartBtn(): Chainable {
+    return cy.dataCy('add_to_cart');
+  }
+
+  private getRemoveBtn(): Chainable {
+    return cy.dataCy('remove');
+  }
+
+  private getInventoryContainer(): Chainable {
+    return cy.dataCy('inventory_container');
   }
 }

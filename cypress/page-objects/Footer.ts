@@ -1,3 +1,5 @@
+import Chainable = Cypress.Chainable;
+
 export class Footer {
   assertFooterVisible(): this {
     cy.get('footer').should('be.visible');
@@ -7,21 +9,21 @@ export class Footer {
   assertSocialMediaLogo(): this {
     const social = {
       facebook: {
-        selector: '.social_facebook',
+        selector: 'facebook',
         url: 'https://www.facebook.com/saucelabs',
       },
       twitter: {
-        selector: '.social_twitter',
+        selector: 'twitter',
         url: 'https://twitter.com/saucelabs',
       },
       linkedIn: {
-        selector: '.social_linkedin',
+        selector: 'linkedin',
         url: 'https://www.linkedin.com/company/sauce-labs/',
       },
     };
 
     Object.values(social).forEach((platform) => {
-      cy.get(platform.selector)
+      cy.dataCy('platform')
         .should('be.visible')
         .find('a')
         .should('have.attr', 'href', platform.url);
@@ -31,11 +33,15 @@ export class Footer {
   }
 
   assertCopyrightsText(): this {
-    cy.get('.footer_copy').should(
+    this.getFooterCopyrights().should(
       'have.text',
       '© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy',
     );
 
     return this;
+  }
+
+  private getFooterCopyrights(): Chainable {
+    return cy.dataCy('copyrights');
   }
 }

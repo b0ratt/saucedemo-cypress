@@ -8,7 +8,6 @@ describe('Product order', () => {
 	const inventoryPage = new InventoryPage();
 	const header = new Header();
 	const productPage = new ProductPage();
-	const cartPage = new CartPage();
 	const username = credentials.username[0];
 
 	context('Standard user', () => {

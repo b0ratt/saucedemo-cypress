@@ -8,8 +8,12 @@ describe('Authentication', () => {
   const password = credentials.password;
   let username: string;
 
-  beforeEach(() => {
+  beforeEach('Navigate to login page', () => {
     loginPage.visit();
+  });
+
+  afterEach('Delete cookie', () => {
+    cy.clearCookie('session-username');
   });
 
   context('Desktop', () => {

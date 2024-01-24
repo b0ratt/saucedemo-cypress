@@ -55,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: E2E report
-          path: cypress/mochawesome-report
+          path: cypress/mochawesome

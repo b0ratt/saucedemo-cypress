@@ -18,6 +18,8 @@ describe('Authentication', () => {
 
   context('Desktop', () => {
     it('Verify login page content', () => {
+      throw Error('slack notification test');
+
       loginPage
         .assertLoginPageHeader()
         .assertAuthenticationForm()

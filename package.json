@@ -64,9 +64,9 @@
   "scripts": {
     "start": "react-scripts start",
     "e2e:all": "npx cypress run",
-    "e2e:desktop": "npx cypress run --spec **/desktop/*-desktop.cy.ts",
-    "e2e:medium": "npx cypress run --spec **/medium-device/*-medium.cy.ts",
-    "e2e:small": "npx cypress run --spec **/small-device/*-small.cy.ts",
+    "e2e:desktop": "npx cypress run --spec **/desktop/*.cy.ts",
+    "e2e:medium": "npx cypress run --spec **/medium-device/*.cy.ts",
+    "e2e:small": "npx cypress run --spec **/small-device/*.cy.ts",
     "report:merge": "npx mochawesome-merge cypress/results/*.json -o cypress/mochawesome/merged-report.json",
     "report:generate": "cd cypress/mochawesome && npx marge merged-report.json -o ../mochawesome/ --charts true",
     "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\"",

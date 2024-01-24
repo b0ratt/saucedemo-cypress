@@ -15,6 +15,10 @@ describe('Authentication', () => {
       loginPage.visit();
     });
 
+    afterEach('Delete cookie', () => {
+      cy.clearCookie('session-username');
+    });
+
     it('Verify login page content', () => {
       loginPage
         .assertLoginPageHeader()

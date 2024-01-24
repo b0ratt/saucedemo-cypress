@@ -30,47 +30,51 @@ describe('Order flow', () => {
       const productName = 'Sauce Labs Backpack';
       let productDescription: string, productPrice: string;
 
-      inventoryPage.getProductByName(productName).within(() => {
-        cy.get('.inventory_item_desc').invoke('text').as('productDescription');
-        cy.get('.inventory_item_price').invoke('text').as('productPrice');
-      });
+      inventoryPage
+        .getProductByName(productName)
+        .parents('.inventory_item')
+        .within(() => {
+          cy.get('.inventory_item_desc')
+            .invoke('text')
+            .as('productDescription');
+          cy.get('.inventory_item_price').invoke('text').as('productPrice');
+        });
 
       inventoryPage
         .addProductToCart(productName)
         .assertRemoveBtnByName(productName);
 
-      cy.get('@productDescription').then((_description) => {
-        productDescription = _description.toString();
+      cy.get('@productDescription')
+        .then((_description) => {
+          productDescription = _description.toString();
 
-        return cy
-          .get('@productPrice')
-          .then((_price) => {
-            productPrice = _price.toString();
-          })
-          .then(() => {
-            const sanitizedPrice = productPrice.replace('$', '');
+          return cy.get('@productPrice');
+        })
+        .then((_price) => {
+          productPrice = _price.toString();
 
-            header.assertCartIndicator(1).clickCartBtn();
-            cartPage
-              .assertCartContainsProduct(productName)
-              .assertCartProductDescription(productName, productDescription)
-              .assertCartProductPrice(productName, productPrice)
-              .clickCheckoutBtn();
-            checkoutPage
-              .assertAddressFormVisible()
-              .fillFirstName(orderData.firstName)
-              .fillLastName(orderData.lastName)
-              .fillZipCode(orderData.zipCode)
-              .clickContinueBtn()
-              .assertCheckoutProduct(productName)
-              .assertCheckoutProductDescription(productName, productDescription)
-              .assertCheckoutProductPrice(productName, productPrice)
-              .assertOrderSummaryVisible()
-              .assertCheckoutTotalPrice(parseFloat(sanitizedPrice))
-              .clickFinishBtn()
-              .assertCheckoutCompleted();
-          });
-      });
+          const sanitizedPrice = productPrice.replace('$', '');
+
+          header.assertCartIndicator(1).clickCartBtn();
+          cartPage
+            .assertCartContainsProduct(productName)
+            .assertCartProductDescription(productName, productDescription)
+            .assertCartProductPrice(productName, productPrice)
+            .clickCheckoutBtn();
+          checkoutPage
+            .assertAddressFormVisible()
+            .fillFirstName(orderData.firstName)
+            .fillLastName(orderData.lastName)
+            .fillZipCode(orderData.zipCode)
+            .clickContinueBtn()
+            .assertCheckoutProduct(productName)
+            .assertCheckoutProductDescription(productName, productDescription)
+            .assertCheckoutProductPrice(productName, productPrice)
+            .assertOrderSummaryVisible()
+            .assertCheckoutTotalPrice(parseFloat(sanitizedPrice))
+            .clickFinishBtn()
+            .assertCheckoutCompleted();
+        });
     });
 
     it('Order few products', () => {
@@ -83,11 +87,13 @@ describe('Order flow', () => {
         inventoryPage.addProductToCart(item).assertRemoveBtnByName(item);
         inventoryPage
           .getProductByName(item)
+          .parents('.inventory_item')
           .find('.inventory_item_desc')
           .invoke('text')
           .as(`productDescription-${index}`);
         inventoryPage
           .getProductByName(item)
+          .parents('.inventory_item')
           .find('.inventory_item_price')
           .invoke('text')
           .as(`productPrice-${index}`);
@@ -152,10 +158,15 @@ describe('Order flow', () => {
       const productName = 'Sauce Labs Backpack';
       let productDescription: string, productPrice: string;
 
-      inventoryPage.getProductByName(productName).within(() => {
-        cy.get('.inventory_item_desc').invoke('text').as('productDescription');
-        cy.get('.inventory_item_price').invoke('text').as('productPrice');
-      });
+      inventoryPage
+        .getProductByName(productName)
+        .parents('.inventory_item')
+        .within(() => {
+          cy.get('.inventory_item_desc')
+            .invoke('text')
+            .as('productDescription');
+          cy.get('.inventory_item_price').invoke('text').as('productPrice');
+        });
 
       inventoryPage
         .addProductToCart(productName)

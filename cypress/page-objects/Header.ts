@@ -70,7 +70,7 @@ export class Header extends BasePage {
   }
 
   private getProductSortBtn(): Chainable {
-    return cy.dataCy('product_sort');
+    return cy.dataCy('sort_container');
   }
 
   private getAppLogo(): Chainable {

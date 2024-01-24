@@ -10,6 +10,7 @@ export class InventoryPage {
   addProductToCart(productName: string): this {
     this.getInventoryItem()
       .contains(productName)
+      .parents('[data-cy="inventory_item"]')
       .within(() => {
         this.getAddToCartBtn().should('be.visible').click();
       });
@@ -48,6 +49,7 @@ export class InventoryPage {
   assertRemoveBtnByName(productName: string): this {
     this.getInventoryItem()
       .contains(productName)
+      .parents('[data-cy="inventory_item"]')
       .within(() => {
         this.getRemoveBtn().should('contain', 'Remove').and('be.visible');
       });

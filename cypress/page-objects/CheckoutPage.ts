@@ -1,87 +1,86 @@
+import Chainable = Cypress.Chainable;
+
 export class CheckoutPage {
   URL = 'checkout-step-one.html';
 
   clickContinueBtn(): this {
-    cy.get('#continue').should('be.visible').click();
+    this.getContinueBtn().should('be.visible').click();
 
     return this;
   }
 
   clickFinishBtn(): this {
-    cy.get('#finish').should('be.visible').click();
+    this.getFinishBtn().should('be.visible').click();
 
     return this;
   }
 
   fillFirstName(firstName: string): this {
-    cy.get('.checkout_info #first-name').type(firstName);
+    this.getFirstNameInput().type(firstName);
 
     return this;
   }
 
   fillLastName(lastName: string): this {
-    cy.get('.checkout_info #last-name').type(lastName);
+    this.getLastNameInput().type(lastName);
 
     return this;
   }
 
   fillZipCode(zipCode: string): this {
-    cy.get('.checkout_info #postal-code').type(zipCode);
+    this.getZipCodeInput().type(zipCode);
 
     return this;
   }
 
   assertValidationMessage(message: string): this {
-    cy.get('.error-message-container')
-      .should('be.visible')
-      .and('contain', message);
+    this.getErrorMessage().should('be.visible').and('contain', message);
 
     return this;
   }
 
   assertValidationMessageNotExist(): this {
-    cy.get('.error-message-container').should('not.exist');
+    this.getErrorMessage().should('not.exist');
 
     return this;
   }
 
   assertCheckoutTotalPrice(totalPrice: number): this {
-    console.log(totalPrice);
-
     const tax = totalPrice * 0.08;
     const total = parseFloat(tax.toFixed(2)) + totalPrice;
 
-    cy.get('.summary_subtotal_label').should('contain', totalPrice);
-    cy.get('.summary_tax_label').should('contain', tax.toFixed(2));
-    cy.get('.summary_total_label').should('contain', total);
+    this.getSubtotalPrice().should('contain', totalPrice);
+    this.getTaxLabel().should('contain', tax.toFixed(2));
+    this.getTotalPrice().should('contain', total);
 
     return this;
   }
 
   assertCheckoutCompleted(): this {
-    cy.get('#checkout_complete_container').within(() => {
-      cy.get('.complete-header')
-        .should('contain', 'Thank you for your order!')
-        .and('be.visible');
-      cy.get('.complete-text')
-        .should(
-          'contain',
-          'Your order has been dispatched, and will arrive just as fast as the pony can get there!',
-        )
-        .and('be.visible');
-      cy.get('#back-to-products')
-        .should('contain', 'Back Home')
-        .and('be.visible');
-    });
+    this.getCompleteCheckoutHeader()
+      .should('be.visible')
+      .and('contain', 'Thank you for your order!');
+    this.getCompleteCheckoutInfo()
+      .should('be.visible')
+      .and(
+        'contain',
+        'Your order has been dispatched, and will arrive just as fast as the pony can get there!',
+      );
+    this.getBackToProductsBtn()
+      .should('be.visible')
+      .and('contain', 'Back Home');
 
     return this;
   }
 
   assertCheckoutProduct(productName: string, amount: number = 1): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.cart_quantity').should('contain', amount);
-      cy.get('.cart_item_label > [id^="item_"]').should('contain', productName);
-    });
+    this.getCheckoutItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCheckoutQuantity().should('contain', amount);
+        this.getCheckoutItemName().should('contain', productName);
+      });
 
     return this;
   }
@@ -90,17 +89,23 @@ export class CheckoutPage {
     productName: string,
     description: string,
   ): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.inventory_item_desc').should('contain', description);
-    });
+    this.getCheckoutItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCheckoutItemDescription().should('contain', description);
+      });
 
     return this;
   }
 
   assertCheckoutProductPrice(productName: string, price: string): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.inventory_item_price').should('contain', price);
-    });
+    this.getCheckoutItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCheckoutItemPrice().should('contain', price);
+      });
 
     return this;
   }
@@ -156,5 +161,73 @@ export class CheckoutPage {
     cy.get('.checkout_info #postal-code').should('be.visible');
 
     return this;
+  }
+
+  private getContinueBtn(): Chainable {
+    return cy.dataCy('continue_btn');
+  }
+
+  private getFinishBtn(): Chainable {
+    return cy.dataCy('finish_btn');
+  }
+
+  private getFirstNameInput(): Chainable {
+    return cy.dataCy('first_name');
+  }
+
+  private getLastNameInput(): Chainable {
+    return cy.dataCy('last_name');
+  }
+
+  private getZipCodeInput(): Chainable {
+    return cy.dataCy('zip_code');
+  }
+
+  private getErrorMessage(): Chainable {
+    return cy.dataCy('error_message');
+  }
+
+  private getSubtotalPrice(): Chainable {
+    return cy.dataCy('subtotal_price');
+  }
+
+  private getTaxLabel(): Chainable {
+    return cy.dataCy('tax_label');
+  }
+
+  private getTotalPrice(): Chainable {
+    return cy.dataCy('total_price');
+  }
+
+  private getCompleteCheckoutHeader(): Chainable {
+    return cy.dataCy('complete_header');
+  }
+
+  private getCompleteCheckoutInfo(): Chainable {
+    return cy.dataCy('complete_text');
+  }
+
+  private getBackToProductsBtn(): Chainable {
+    return cy.dataCy('back_to_products_btn');
+  }
+
+  private getCheckoutItem(): Chainable {
+    return cy.dataCy('cart_item');
+  }
+
+  private getCheckoutQuantity(): Chainable {
+    return cy.dataCy('cart_quantity');
+  }
+
+  private getCheckoutItemName(): Chainable {
+    return cy.dataCy('item_title_link');
+  }
+
+  private getCheckoutItemDescription(): Chainable {
+    return cy.dataCy('item_description');
+  }
+
+  private getCheckoutItemPrice(): Chainable {
+    return cy.dataCy('item_price');
   }
 }

@@ -18,8 +18,10 @@ const Finish = ({ history }) => {
           className="checkout_complete_container"
         >
           <img alt="Pony Express" className="pony_express" src={Checkmark} />
-          <h2 className="complete-header">Thank you for your order!</h2>
-          <div className="complete-text">
+          <h2 className="complete-header" data-cy="complete_header">
+            Thank you for your order!
+          </h2>
+          <div className="complete-text" data-cy="complete_text">
             Your order has been dispatched, and will arrive just as fast as the
             pony can get there!
           </div>
@@ -27,7 +29,7 @@ const Finish = ({ history }) => {
             label="Back Home"
             onClick={() => history.push(ROUTES.INVENTORY)}
             size={BUTTON_SIZES.SMALL}
-            testId="back-to-products"
+            data-cy="back_to_products_btn"
           />
         </div>
       </div>

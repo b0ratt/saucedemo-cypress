@@ -26,7 +26,7 @@ describe('Cart', () => {
       header.assertCartIndicator(null).checkCartItemsInStorage(false);
     });
 
-    it.only('Add and delete item from product page and verify cart indicator', () => {
+    it('Add and delete item from product page and verify cart indicator', () => {
       productPage.visitProductPage().clickAddToCart().assertRemoveBtn();
       header.assertCartIndicator(1).checkCartItemsInStorage(true);
       productPage.clickRemove();

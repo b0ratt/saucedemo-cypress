@@ -23,7 +23,7 @@ export class Footer {
     };
 
     Object.values(social).forEach((platform) => {
-      cy.dataCy('platform')
+      cy.dataCy(platform.selector)
         .should('be.visible')
         .find('a')
         .should('have.attr', 'href', platform.url);

@@ -4,6 +4,9 @@ import addContext from 'mochawesome/addContext';
 const titleToFileName = (title) => title.replace(/[:\/]/g, '');
 
 Cypress.on('test:after:run', (test, runnable) => {
+  console.log(`gowno: ${Cypress.spec.name}`);
+  console.log(`san: ${Cypress.spec.name.split('/')[1]}`);
+
   if (test.state === 'failed') {
     let parent = runnable.parent;
     let filename = '';

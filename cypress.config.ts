@@ -5,12 +5,12 @@ require('dotenv').config({ path: path.resolve('', '.env') });
 
 export default defineConfig({
   reporter: 'mochawesome',
-  screenshotsFolder: 'cypress/results/mochawesome/screenshots',
-  videosFolder: 'cypress/results/mochawesome/videos',
+  screenshotsFolder: 'cypress/mochawesome/screenshots',
+  videosFolder: 'cypress/mochawesome/videos',
   reporterOptions: {
     useInlineDiffs: true,
     embeddedScreenshots: true,
-    reportDir: 'cypress/results/mochawesome',
+    reportDir: 'cypress/results/',
     reportFilename: '[name].html',
     overwrite: true,
     html: true,

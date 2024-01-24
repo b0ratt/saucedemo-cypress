@@ -64,7 +64,7 @@
   "scripts": {
     "start": "react-scripts start",
     "e2e:all": "npx cypress run",
-    "e2e:desktop": "npx cypress run --spec **/*-desktop.cy.ts",
+    "e2e:desktop": "npx cypress run --spec **/auth/*-desktop.cy.ts",
     "e2e:medium": "npx cypress run --spec **/*-medium.cy.ts",
     "e2e:small": "npx cypress run --spec **/*-small.cy.ts",
     "report:merge": "npx mochawesome-merge cypress/results/mochawesome/*.json -o cypress/report.json",

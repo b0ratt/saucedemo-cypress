@@ -1,46 +1,48 @@
 import { BasePage } from './BasePage';
+import Chainable = Cypress.Chainable;
 
 export class Header extends BasePage {
   clickCartBtn(): this {
-    cy.get('#shopping_cart_container').should('be.visible').click();
+    this.getCartBtn().should('be.visible').click();
+
     return this;
   }
 
   sortInventoryItems(option: string): this {
-    cy.get('.product_sort_container').select(option);
+    this.getProductSortBtn().select(option);
 
     return this;
   }
 
   assertInventoryHeader(): this {
-    cy.get('.header_label .app_logo').should('have.text', 'Swag Labs');
+    this.getAppLogo().should('have.text', 'Swag Labs');
+
     return this;
   }
 
   assertMenuButton(): this {
-    cy.get('#header_container #react-burger-menu-btn').should('be.visible');
+    this.getBurgerBtn().should('be.visible');
+
     return this;
   }
 
   assertCartButton(): this {
-    cy.get('.primary_header #shopping_cart_container').should('be.visible');
+    this.getCartBtn().should('be.visible');
+
     return this;
   }
 
   assertCartIndicator(value: number | null): this {
     value === null
-      ? cy.get('.shopping_cart_badge').should('not.exist')
-      : cy
-          .get('.shopping_cart_badge')
-          .should('be.visible')
-          .and('have.text', value);
+      ? this.getCartBadge().should('not.exist')
+      : this.getCartBadge().should('be.visible').and('have.text', value);
+
     return this;
   }
 
   assertSortContainer(): this {
-    cy.get('.right_component select[class="product_sort_container"]').should(
-      'be.visible',
-    );
+    this.getProductSortBtn().should('be.visible');
+
     return this;
   }
 
@@ -55,11 +57,35 @@ export class Header extends BasePage {
     };
 
     Object.values(sortingOptions).forEach((option) => {
-      cy.get('.product_sort_container')
+      this.getSortingContainer()
         .children(`option[value="${option}"]`)
         .should('exist');
     });
 
     return this;
+  }
+
+  private getCartBtn(): Chainable {
+    return cy.dataCy('cart_button');
+  }
+
+  private getProductSortBtn(): Chainable {
+    return cy.dataCy('sort_container');
+  }
+
+  private getAppLogo(): Chainable {
+    return cy.dataCy('app_logo');
+  }
+
+  private getBurgerBtn(): Chainable {
+    return cy.dataCy('burger_btn');
+  }
+
+  private getCartBadge(): Chainable {
+    return cy.dataCy('cart_badge');
+  }
+
+  private getSortingContainer(): Chainable {
+    return cy.dataCy('sort_container');
   }
 }

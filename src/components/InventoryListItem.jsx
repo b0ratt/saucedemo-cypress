@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { ShoppingCart } from "../utils/shopping-cart";
-import { isProblemUser } from "../utils/Credentials";
-import "./InventoryListItem.css";
-import { ROUTES } from "../utils/Constants";
-import Button, { BUTTON_SIZES, BUTTON_TYPES } from "./Button";
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { ShoppingCart } from '../utils/shopping-cart';
+import { isProblemUser } from '../utils/Credentials';
+import './InventoryListItem.css';
+import { ROUTES } from '../utils/Constants';
+import Button, { BUTTON_SIZES, BUTTON_TYPES } from './Button';
 
 const InventoryListItem = (props) => {
   const { desc, id, image_url, history, name, price } = props;
@@ -63,10 +63,10 @@ const InventoryListItem = (props) => {
    */
   /* istanbul ignore next */
   const ButtonType = ({ id, item, itemInCart }) => {
-    const label = itemInCart ? "Remove" : "Add to cart";
+    const label = itemInCart ? 'Remove' : 'Add to cart';
     const onClick = itemInCart ? () => removeFromCart(id) : () => addToCart(id);
     const type = itemInCart ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PRIMARY;
-    const testId = `${label}-${item}`.replace(/\s+/g, "-").toLowerCase();
+    const testId = `${label}`.replace(/\s+/g, '_').toLowerCase();
 
     return (
       <Button
@@ -74,15 +74,15 @@ const InventoryListItem = (props) => {
         label={label}
         onClick={onClick}
         size={BUTTON_SIZES.SMALL}
-        testId={testId}
+        data-cy={testId}
         type={type}
       />
     );
   };
-  const url = isProblemUser() ? "sl-404.jpg" : image_url;
+  const url = isProblemUser() ? 'sl-404.jpg' : image_url;
 
   return (
-    <div className="inventory_item">
+    <div className="inventory_item" data-cy="inventory_item">
       <div className="inventory_item_img">
         <a
           href="#"
@@ -95,15 +95,20 @@ const InventoryListItem = (props) => {
           <img
             alt={name}
             className="inventory_item_img"
+            data-cy="inventory_item_image"
             src={require(`../assets/img/${url}`).default}
           />
         </a>
       </div>
-      <div className="inventory_item_description">
+      <div
+        className="inventory_item_description"
+        data-cy="inventory_item_description"
+      >
         <div className="inventory_item_label">
           <a
             href="#"
             id={`item_${id}_title_link`}
+            data-cy="inventory_item_name"
             onClick={(evt) => {
               evt.preventDefault();
               history.push(itemLink);
@@ -114,7 +119,9 @@ const InventoryListItem = (props) => {
           <div className="inventory_item_desc">{desc}</div>
         </div>
         <div className="pricebar">
-          <div className="inventory_item_price">${price}</div>
+          <div className="inventory_item_price" data-cy="inventory_item_price">
+            ${price}
+          </div>
           <ButtonType id={id} itemInCart={itemInCart} item={name} />
         </div>
       </div>

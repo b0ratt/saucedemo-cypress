@@ -46,7 +46,7 @@ const Cart = ({ history }) => {
                   history.push(ROUTES.CHECKOUT_STEP_ONE);
                 }}
                 size={BUTTON_SIZES.MEDIUM}
-                testId="checkout"
+                data-cy="checkout_btn"
                 type={BUTTON_TYPES.ACTION}
               />
             </div>

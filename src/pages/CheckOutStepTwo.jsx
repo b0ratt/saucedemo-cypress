@@ -57,11 +57,16 @@ const CheckOutStepTwo = ({ history }) => {
                 Free Pony Express Delivery!
               </div>
               <div className="summary_info_label">Price Total</div>
-              <div className="summary_subtotal_label">
+              <div className="summary_subtotal_label" data-cy="subtotal_price">
                 Item total: ${orderTotal}
               </div>
-              <div className="summary_tax_label">Tax: ${orderTax}</div>
-              <div className="summary_info_label summary_total_label">
+              <div className="summary_tax_label" data-cy="tax_label">
+                Tax: ${orderTax}
+              </div>
+              <div
+                className="summary_info_label summary_total_label"
+                data-cy="total_price"
+              >
                 Total: ${(orderTotal + parseFloat(orderTax)).toFixed(2)}
               </div>
               <div className="cart_footer">
@@ -87,7 +92,7 @@ const CheckOutStepTwo = ({ history }) => {
                     history.push(ROUTES.CHECKOUT_COMPLETE);
                   }}
                   size={BUTTON_SIZES.MEDIUM}
-                  testId="finish"
+                  data-cy="finish_btn"
                   type={BUTTON_TYPES.ACTION}
                 />
               </div>

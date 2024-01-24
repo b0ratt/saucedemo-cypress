@@ -21,7 +21,7 @@ function Login(props) {
   useEffect(() => {
     if (location.state) {
       return setError(
-        `You can only access '${location.state.from.pathname}' when you are logged in.`
+        `You can only access '${location.state.from.pathname}' when you are logged in.`,
       );
     }
   }, [location.state]);
@@ -53,7 +53,7 @@ function Login(props) {
       history.push(ROUTES.INVENTORY);
     } else {
       return setError(
-        'Username and password do not match any user in this service'
+        'Username and password do not match any user in this service',
       );
     }
 
@@ -70,19 +70,21 @@ function Login(props) {
 
   return (
     <div className="login_container">
-      <div className="login_logo">Swag Labs</div>
+      <div className="login_logo" data-cy="logo">
+        Swag Labs
+      </div>
 
       <div className="login_wrapper">
         <div className="login_wrapper-inner">
           <div id="login_button_container" className="form_column">
-            <div className="login-box">
+            <div className="login-box" data-cy="login_container">
               <form onSubmit={handleSubmit}>
                 <InputError
                   isError={Boolean(error)}
                   type={INPUT_TYPES.TEXT}
                   value={username}
                   onChange={handleUserChange}
-                  testId="username"
+                  data-cy="username"
                   placeholder="Username"
                   // Custom
                   id="user-name"
@@ -95,7 +97,7 @@ function Login(props) {
                   type={INPUT_TYPES.PASSWORD}
                   value={password}
                   onChange={handlePassChange}
-                  testId="password"
+                  data-cy="password"
                   placeholder="Password"
                   // Custom
                   autoCorrect="off"
@@ -110,7 +112,7 @@ function Login(props) {
                   // `btn_action` has no style function
                   // but is there for backwards compatibility
                   customClass="btn_action"
-                  testId="login-button"
+                  data-cy="login_button"
                   value="Login"
                 />
               </form>
@@ -119,7 +121,11 @@ function Login(props) {
         </div>
         <div className="login_credentials_wrap">
           <div className="login_credentials_wrap-inner">
-            <div id="login_credentials" className="login_credentials">
+            <div
+              id="login_credentials"
+              className="login_credentials"
+              data-cy="login_credentials"
+            >
               <h4>Accepted usernames are:</h4>
               standard_user
               <br />
@@ -130,7 +136,7 @@ function Login(props) {
               performance_glitch_user
               <br />
             </div>
-            <div className="login_password">
+            <div className="login_password" data-cy="login_password">
               <h4>Password for all users:</h4>
               secret_sauce
             </div>

@@ -1,34 +1,69 @@
+import Chainable = Cypress.Chainable;
+
 export class CartPage {
   URL = 'cart.html';
 
   clickCheckoutBtn(): this {
-    cy.get('#checkout').should('be.visible').click();
+    this.getCheckoutBtn().should('be.visible').click();
 
     return this;
   }
 
   assertCartContainsProduct(productName: string, amount: number = 1): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.cart_quantity').should('contain', amount);
-      cy.get('.cart_item_label > [id^="item_"]').should('contain', productName);
-    });
+    this.getCartItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCartQuantity().should('contain', amount);
+        this.getCartItemName().should('contain', productName);
+      });
 
     return this;
   }
 
   assertCartProductDescription(productName: string, description: string): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.inventory_item_desc').should('contain', description);
-    });
+    this.getCartItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCartItemDescription().should('contain', description);
+      });
 
     return this;
   }
 
   assertCartProductPrice(productName: string, price: string): this {
-    cy.get(`.cart_item:contains(${productName})`).within(() => {
-      cy.get('.inventory_item_price').should('contain', price);
-    });
+    this.getCartItem()
+      .contains(productName)
+      .parents('[data-cy="cart_item"]')
+      .within(() => {
+        this.getCartItemPrice().should('contain', price);
+      });
 
     return this;
+  }
+
+  private getCartItem(): Chainable {
+    return cy.dataCy('cart_item');
+  }
+
+  private getCartQuantity(): Chainable {
+    return cy.dataCy('cart_quantity');
+  }
+
+  private getCartItemName(): Chainable {
+    return cy.dataCy('item_title_link');
+  }
+
+  private getCartItemDescription(): Chainable {
+    return cy.dataCy('item_description');
+  }
+
+  private getCartItemPrice(): Chainable {
+    return cy.dataCy('item_price');
+  }
+
+  private getCheckoutBtn(): Chainable {
+    return cy.dataCy('checkout_btn');
   }
 }

@@ -1,3 +1,5 @@
+import Chainable = Cypress.Chainable;
+
 export class ProductPage {
   URL = '/inventory-item.html';
 
@@ -11,33 +13,40 @@ export class ProductPage {
   }
 
   clickAddToCart(): this {
-    cy.get('[id^="add-to-cart-sauce-labs-"]').click();
+    this.getAddToCartBtn().click();
+
     return this;
   }
 
   clickRemove(): this {
-    cy.get('[id^="remove-sauce-labs-"]').should('be.visible').click();
+    this.getRemoveFromCartBtn().should('be.visible').click();
+
     return this;
   }
 
   assertBackToInventoryBtn(): this {
-    cy.get('#back-to-products')
+    this.getBackToProductsBtn()
       .should('be.visible')
       .and('have.text', 'Back to products');
-    return this;
-  }
 
-  assertAddToCartBtn(): this {
-    cy.get('#add-to-cart-sauce-labs-bike-light')
-      .should('be.visible')
-      .and('have.text', 'Add to cart');
     return this;
   }
 
   assertRemoveBtn(): this {
-    cy.get('[id^="remove-sauce-labs-"]')
-      .should('be.visible')
-      .and('have.text', 'Remove');
+    this.getRemoveFromCartBtn().should('be.visible').and('have.text', 'Remove');
+
     return this;
+  }
+
+  private getAddToCartBtn(): Chainable {
+    return cy.dataCy('add_to_cart');
+  }
+
+  private getRemoveFromCartBtn(): Chainable {
+    return cy.dataCy('remove');
+  }
+
+  private getBackToProductsBtn(): Chainable {
+    return cy.dataCy('back_to_products');
   }
 }

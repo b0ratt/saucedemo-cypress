@@ -7,7 +7,7 @@ on:
         test-type:
           description: 'Device: (all/desktop/medium/small)'
           required: true
-          default: 'all'
+          default: 'desktop'
           options:
             - 'all'
             - 'desktop'

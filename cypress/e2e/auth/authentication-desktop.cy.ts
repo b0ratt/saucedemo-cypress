@@ -6,7 +6,7 @@ describe('Authentication', () => {
   const loginPage = new LoginPage();
   const inventoryPage = new InventoryPage();
   const password = credentials.password;
-  let username: string;
+  let username, pass: string;
 
   beforeEach('Navigate to login page', () => {
     loginPage.visit();

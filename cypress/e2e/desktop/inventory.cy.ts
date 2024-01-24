@@ -16,7 +16,7 @@ describe('Inventory tests', () => {
       inventoryPage.visit();
     });
 
-    it('Should verify inventory content', () => {
+    it('[INV-1] Should verify inventory content', () => {
       header
         .assertInventoryHeader()
         .assertMenuButton()
@@ -35,7 +35,7 @@ describe('Inventory tests', () => {
         .assertCopyrightsText();
     });
 
-    it('Should verify sorting by name', () => {
+    it('[INV-2] Should verify sorting by name', () => {
       const sortingOptions = {
         nameAZ: 'Name (A to Z)',
         nameZA: 'Name (Z to A)',
@@ -60,7 +60,7 @@ describe('Inventory tests', () => {
       });
     });
 
-    it('Should verify sorting by price', () => {
+    it('[INV-3] Should verify sorting by price', () => {
       const sortingOptions = {
         priceLowHigh: 'Price (low to high)',
         priceHighLow: 'Price (high to low)',

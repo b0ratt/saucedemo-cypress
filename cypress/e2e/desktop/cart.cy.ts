@@ -19,14 +19,14 @@ describe('Cart', () => {
       cy.clearLocalStorage('cart-contents');
     });
 
-    it('Add and delete item from invetory page and verify cart indicator', () => {
+    it('[CART-1] Add and delete item from invetory page and verify cart indicator', () => {
       inventoryPage.visit().clickAddToCart().assertRemoveFromCartBtn();
       header.assertCartIndicator(1).checkCartItemsInStorage(true);
       inventoryPage.clickRemove();
       header.assertCartIndicator(null).checkCartItemsInStorage(false);
     });
 
-    it('Add and delete item from product page and verify cart indicator', () => {
+    it('[CART-2] Add and delete item from product page and verify cart indicator', () => {
       productPage.visitProductPage().clickAddToCart().assertRemoveBtn();
       header.assertCartIndicator(1).checkCartItemsInStorage(true);
       productPage.clickRemove();

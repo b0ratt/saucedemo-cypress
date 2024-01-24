@@ -28,7 +28,7 @@ describe('Order flow', () => {
       cy.clearLocalStorage('cart-contents');
     });
 
-    it('Order single product', () => {
+    it('[ORD-7] Order single product', () => {
       const productName = 'Sauce Labs Backpack';
       let productDescription: string, productPrice: string;
 
@@ -79,7 +79,7 @@ describe('Order flow', () => {
         });
     });
 
-    it('Order few products', () => {
+    it('[ORD-8] Order few products', () => {
       const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light'];
       let firstProductDescription: string, secondProductDescription: string;
       let firstProductPrice: string, secondProductPrice: string;
@@ -156,7 +156,7 @@ describe('Order flow', () => {
         });
     });
 
-    it('Checkout validation', () => {
+    it('[ORD-9] Checkout validation', () => {
       const productName = 'Sauce Labs Backpack';
       let productDescription: string, productPrice: string;
 

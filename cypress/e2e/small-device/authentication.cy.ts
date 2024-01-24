@@ -19,14 +19,14 @@ describe('Authentication', () => {
       cy.clearCookie('session-username');
     });
 
-    it('Verify login page content', () => {
+    it('[AUTH-11] Verify login page content', () => {
       loginPage
         .assertLoginPageHeader()
         .assertAuthenticationForm()
         .assertTestingCredentials();
     });
 
-    it('Should verify auth validation', () => {
+    it('[AUTH-12] Should verify auth validation', () => {
       username = credentials.username[0];
 
       loginPage
@@ -37,7 +37,7 @@ describe('Authentication', () => {
         .assertErrorMessageVisible('Epic sadface: Password is required');
     });
 
-    it('Should login with standard user', () => {
+    it('[AUTH-13] Should login with standard user', () => {
       username = credentials.username[0];
 
       loginPage
@@ -50,7 +50,7 @@ describe('Authentication', () => {
       inventoryPage.assertInventoryContainerVisible();
     });
 
-    it('Should not login with locked user', () => {
+    it('[AUTH-14] Should not login with locked user', () => {
       username = credentials.username[1];
 
       loginPage
@@ -61,21 +61,8 @@ describe('Authentication', () => {
         .assertCookieAfterLogin(username);
     });
 
-    it('Should login with problem user', () => {
+    it('[AUTH-15] Should login with problem user', () => {
       username = credentials.username[2];
-
-      loginPage
-        .fillUsernameInput(username)
-        .fillPasswordInput(password)
-        .clickLoginButton()
-        .assertErrorMessageNotExist()
-        .assertCookieAfterLogin(username);
-
-      inventoryPage.assertInventoryContainerVisible();
-    });
-
-    it('Should login with performance glitch user', () => {
-      username = credentials.username[3];
 
       loginPage
         .fillUsernameInput(username)

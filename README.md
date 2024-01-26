@@ -12,10 +12,10 @@
 2. Install packages with `npm install`
 3. Start application with `npm run start`
 4. Run cypress tests
-   - `npm e2e:all` (desktop & mobile)
-   - `npm e2e:desktop` (desktop)
-   - `npm e2e:medium` (medium device)
-   - `npm e2e:small` (small device)
+   - `npm run e2e:all` (desktop & mobile)
+   - `npm run e2e:desktop` (desktop)
+   - `npm run e2e:medium` (medium device)
+   - `npm run e2e:small` (small device)
 
 ## :computer: GitHub Actions :computer:
 You can run all tests using GitHub Actions using `workflow_dispatch` event trigger. This event requires user input, based on which the desired script is triggered. Possible options include: all, desktop, medium, small

@@ -51,8 +51,33 @@ jobs:
       - name: Generate cypress reports
         run: npm run report:merge && npm run report:generate
 
+      - name: Get tests execution results
+        if: failure() || success()
+        run: |
+          PASSED_TESTS=$(node -e "console.log(require('./cypress/mochawesome/merged-report.json').stats.passes)")
+          FAILED_TESTS=$(node -e "console.log(require('./cypress/mochawesome/merged-report.json').stats.failures)")
+          SKIPPED_TESTS=$(node -e "console.log(require('./cypress/mochawesome/merged-report.json').stats.skipped)")
+          DURATION_SECONDS=$(node -e "console.log(require('./cypress/mochawesome/merged-report.json').stats.duration)")
+          HOURS=$((DURATION_SECONDS / 3600))
+          MINUTES=$(( (DURATION_SECONDS % 3600) / 60 ))
+          SECONDS=$((DURATION_SECONDS % 60))
+          FORMATTED_DURATION=$(printf "%02d:%02d:%02d" $HOURS $MINUTES $SECONDS)
+          echo "PASSED_TESTS=$PASSED_TESTS" >> $GITHUB_ENV
+          echo "FAILED_TESTS=$FAILED_TESTS" >> $GITHUB_ENV
+          echo "SKIPPED_TESTS=$SKIPPED_TESTS" >> $GITHUB_ENV
+          echo "FORMATTED_DURATION=$FORMATTED_DURATION" >> $GITHUB_ENV
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: E2E report
           path: cypress/mochawesome
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK  }}
+          SLACK_USERNAME: Cypress
+          SLACK_TITLE: CI/CD E2E tests
+          SLACK_MESSAGE: ":large_green_square: Passed: ${{ env.PASSED_TESTS  }} \n :large_red_square: Failed: ${{ env.FAILED_TESTS  }} \n :large_blue_square: Skipped: ${{ env.SKIPPED_TESTS  }} \n :alarm_clock: Duration: ${{ env.FORMATTED_DURATION  }}"
+          SLACK_COLOR: ${{ job.status }}
